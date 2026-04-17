@@ -61,11 +61,11 @@ export default {
 			theme: {
 				title: "myAuth",
 				primary: "#0051c3",
-				favicon: "img/fynnlabs.png",
+				favicon: 'img/fynnlabs_favicon.png',
 				logo: {
-					dark: "img/fynnlabs.png",
+					dark: 'img/fynnlabs_favicon.png',
 					light:
-						"img/fynnlabs.png",
+						'img/fynnlabs_favicon.png',
 				},
 			},
 			success: async (ctx, value) => {
