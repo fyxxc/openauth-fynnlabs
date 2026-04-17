@@ -17,9 +17,7 @@ const subjects = createSubjects({
 // 1. UI anpassen: Texte für Registrierung und Passwort-Reset durch Leerzeichen verstecken
 const myPasswordUI = PasswordUI({
     sendCode: async (email, code) => {
-        // This is where you would email the verification code to the
-        // user, e.g. using Resend:
-        // https://resend.com/docs/send-with-cloudflare-workers
+        // This is where you would email the verification code to the user
         console.log(`Sending code ${code} to ${email}`);
     },
     copy: {
@@ -57,19 +55,27 @@ export default {
                 // 2. Modifizierte UI laden und Backend-Routen hart blockieren
                 password: PasswordProvider({
                     ...myPasswordUI,
-                    register: async () => new Response("Registrierung ist auf der Labs-Seite deaktiviert.", { status: 403 }),
+                    register: async () => new Response("Registrierung ist auf der Labs-Seite deaktiviert. Falls du Zugriff benötigst, wende dich an Fynn.", { status: 403 }),
                     change: async () => new Response("Passwort ändern deaktiviert. Bitte an Admin wenden.", { status: 403 }),
                 }),
             },
             theme: {
-                title: "myAuth",
+                title: "Fynnlabs Auth",
                 primary: "#0051c3",
-                // Absolute URLs (prüfe nochmal, ob .com oder .ch richtig ist!)
+                // FEHLER BEHOBEN: Jetzt steht hier überall .ch, damit das Favicon lädt!
                 favicon: 'https://fynnlabs.ch/img/fynnlabs_favicon.png',
                 logo: {
                     dark: 'https://fynnlabs.ch/img/fynnlabs_favicon.png',
                     light: 'https://fynnlabs.ch/img/fynnlabs_favicon.png',
                 },
+                // HIER IST DAS CSS FÜR DEIN GRÖSSERES LOGO
+                css: `
+                    img {
+                        height: 100px !important; 
+                        max-height: none !important;
+                        width: auto !important;
+                    }
+                `
             },
             success: async (ctx, value) => {
                 return ctx.subject("user", {
@@ -91,7 +97,7 @@ async function getUserOnly(env: Env, email: string): Promise<string> {
 
     if (!result) {
         // Schmeißt einen Error, wenn jemand versucht sich einzuloggen, der nicht in der DB steht
-        throw new Error(`Zugriff verweigert: E-Mail ${email} ist nicht für die Labs-Umgebung freigeschaltet.`);
+        throw new Error(`Zugriff verweigert: E-Mail ${email} ist nicht für die Labs-Umgebung freigeschaltet. Melde dich bei Fynn, um Zugriff zu erhalten.`);
     }
     
     console.log(`Erfolgreicher Login für User ${result.id} mit E-Mail ${email}`);
