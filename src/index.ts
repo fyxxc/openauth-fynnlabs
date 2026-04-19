@@ -60,9 +60,8 @@ export default {
                 }),
             },
             theme: {
-                title: "Fynnlabs Auth",
+                title: "Fynnlabs Auth-Service",
                 primary: "#0051c3",
-                // FEHLER BEHOBEN: Jetzt steht hier überall .ch, damit das Favicon lädt!
                 favicon: 'https://fynnlabs.ch/img/fynnlabs_favicon.png',
                 logo: {
                     dark: 'https://fynnlabs.ch/img/fynnlabs_favicon.png',
